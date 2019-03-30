@@ -331,10 +331,12 @@ def get_all_chats():
 
 @app.route('/insert_chat', methods=['POST'])
 def add_chat():
-    from_user = request.form.get('from_user')
-    to_user = request.form.get('to_user')
-    msg_body = request.form.get('msg_body')
-    password = request.form.get('password')
+    temp_result = request.get_json()
+    from_user = temp_result['from_user']
+    print(from_user)
+    to_user = temp_result['to_user']
+    msg_body = temp_result['msg_body']
+    password = temp_result['password']
 
     sql = 'SELECT * FROM users where username = "{}";'.format(from_user)
     cur = mysql.connection.cursor()
