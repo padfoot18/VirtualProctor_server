@@ -29,10 +29,14 @@ def login():
 def chat():
     req = request.get_json(silent=True, force=True)
     matched_intent = req['queryResult']['intent']['displayName']
-    if matched_intent == 'event_query':
-        print(matched_intent)
-        return jsonify({"fulfillmentText": "no events"})
-
+    print(matched_intent)
+    if matched_intent == 'events':
+        '''
+            Code to fetch events from database
+        '''
+        event_data = "Prakalpa\nAbhiyantriki\nSymphony\n\nTell me the event name to know more"
+        return jsonify({"fulfillmentText": event_data})
+    return
 
 if __name__ == '__main__':
     app.run(debug='True')
