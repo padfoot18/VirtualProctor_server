@@ -87,12 +87,14 @@ def chat():
             event_names += tuples['name'] + '\n'
         resp = event_names
     elif matched_intent == 'events_description':
-        resp = response.query_result
-        print('parameter =' + str(resp))
-        # cur = mysql.connection.cursor()
-        # cur.execute("select ;")
-        # row = cur.fetchall()
-        pass
+        print(response.query_result.parameters.fields)
+        event_name = response.query_result.parameters.fields['any'].string_value
+        print(event_name)
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM event WHERE name = %s;", [event_name])
+        row = cur.fetchall()
+        description = row[0]['description']
+        resp = description
 
     elif matched_intent == 'Default Welcome Intent':
         resp = response.query_result.fulfillment_text
