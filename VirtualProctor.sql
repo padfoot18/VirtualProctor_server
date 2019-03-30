@@ -16,6 +16,81 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `event`
+--
+
+DROP TABLE IF EXISTS `event`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `event` (
+  `name` varchar(20) DEFAULT NULL,
+  `type` varchar(20) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `event`
+--
+
+LOCK TABLES `event` WRITE;
+/*!40000 ALTER TABLE `event` DISABLE KEYS */;
+INSERT INTO `event` VALUES ('Abhiyantriki','event','Abhiyantriki is the Technical Fest of our college and will be held for 3 days from 5th April 2019'),('Symphony','event','Symphony is the cultural fest of our college and will be held at 19th of April'),('Prakalpa','event','Prakalpa is State Level Project Competetion on 12th May'),('MLearn','workshop','MLearn is a workshop conducted by Prof. Murtaza Patrawala for Sem 5 Students'),('CyberStud','workshop','CyberStud is a workshop for sem 4 students for Cyber Security conducted by Prof.Manish Potey on 7th April');
+/*!40000 ALTER TABLE `event` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `student_academic_info`
+--
+
+DROP TABLE IF EXISTS `student_academic_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student_academic_info` (
+  `username` varchar(20) DEFAULT NULL,
+  `sem` int(11) DEFAULT NULL,
+  `subject` varchar(20) DEFAULT NULL,
+  `teacher` varchar(20) DEFAULT NULL,
+  `marks` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student_academic_info`
+--
+
+LOCK TABLES `student_academic_info` WRITE;
+/*!40000 ALTER TABLE `student_academic_info` DISABLE KEYS */;
+INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating Systems','Murtaza Patrawala',87),('1611032',5,'SPCC','Suchita Patil',78),('1611032',5,'MCAN','Prasanna Shete',55),('1611032',5,'Web Development','Swapnil Patil',65),('1611032',5,'Data Structure','Manish Potey',97),('1611037',4,'Cloud Computing','Manish Potey',84),('1611037',4,'Cyber Security','Prasidini Padwal',74),('1611037',4,'OOPM','Vaibhav Vasani',74),('1611037',4,'Data Networks','Murtaza Patrawala',72),('1611037',4,'Machine Learning','Nirmal Shinde',42),('1611032',4,'Cloud Computing','Manish Potey',74),('1611032',4,'Cyber Security','Prasidini Padwal',45),('1611032',4,'OOPM','Vaibhav Vasani',94),('1611032',4,'Data Networks','Murtaza Patrawala',69),('1611032',4,'Machine Learning','Nirmal Shinde',75);
+/*!40000 ALTER TABLE `student_academic_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `student_personal_info`
+--
+
+DROP TABLE IF EXISTS `student_personal_info`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student_personal_info` (
+  `username` varchar(20) DEFAULT NULL,
+  `student_name` varchar(20) DEFAULT NULL,
+  `parent_name` varchar(20) DEFAULT NULL,
+  `current_sem` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student_personal_info`
+--
+
+LOCK TABLES `student_personal_info` WRITE;
+/*!40000 ALTER TABLE `student_personal_info` DISABLE KEYS */;
+INSERT INTO `student_personal_info` VALUES ('1611032','Harsh','Jitendra','5'),('1611037','Tanay','Hemant','4');
+/*!40000 ALTER TABLE `student_personal_info` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `username_to_fcmId`
 --
 
@@ -58,7 +133,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('ojas','1234','admin'),('tanay','1234','parent'),('murtaza','1234','teacher');
+INSERT INTO `users` VALUES ('1611022','1234','admin'),('1611037','1234','parent'),('1611034','1234','teacher'),('1611032','1234','parent');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -71,4 +146,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 13:32:11
+-- Dump completed on 2019-03-30 16:50:08
