@@ -17,11 +17,13 @@
           {% endfor %}
       {% endif %}
 
-    <title>Chatbot admin</title>
+    <title>VirtualProctor admin</title>
   </head>
   <body>
-      {% block content %}
-      {% endblock %}
+
+  {% include 'navbar.html' %}
+  {% block content %}
+  {% endblock %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
