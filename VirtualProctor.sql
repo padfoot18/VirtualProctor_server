@@ -16,6 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `chats`
+--
+
+DROP TABLE IF EXISTS `chats`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `chats` (
+  `from_user` varchar(15) DEFAULT NULL,
+  `to_user` varchar(15) DEFAULT NULL,
+  `msg_body` varchar(20000) DEFAULT NULL,
+  `msg_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `fk_from` (`from_user`),
+  KEY `fk_to` (`to_user`),
+  CONSTRAINT `fk_from` FOREIGN KEY (`from_user`) REFERENCES `users` (`username`),
+  CONSTRAINT `fk_to` FOREIGN KEY (`to_user`) REFERENCES `users` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `chats`
+--
+
+LOCK TABLES `chats` WRITE;
+/*!40000 ALTER TABLE `chats` DISABLE KEYS */;
+INSERT INTO `chats` VALUES ('1611034','1611037','hello','2019-03-30 12:28:42'),('1611034','1611032','hiii','2019-03-30 12:33:40'),('1611037','1611034','Hello. How are you doing?','2019-03-30 13:26:07'),('1611034','1611037','I am fine','2019-03-30 13:26:39'),('1611037','1611034','hey','2019-03-30 14:31:26'),('1611034','1611037','yo','2019-03-30 14:32:33');
+/*!40000 ALTER TABLE `chats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `event`
 --
 
@@ -37,6 +66,30 @@ LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
 INSERT INTO `event` VALUES ('Abhiyantriki','event','Abhiyantriki is the Technical Fest of our college and will be held for 3 days from 5th April 2019'),('Symphony','event','Symphony is the cultural fest of our college and will be held at 19th of April'),('Prakalpa','event','Prakalpa is State Level Project Competetion on 12th May'),('MLearn','workshop','MLearn is a workshop conducted by Prof. Murtaza Patrawala for Sem 5 Students'),('CyberStud','workshop','CyberStud is a workshop for sem 4 students for Cyber Security conducted by Prof.Manish Potey on 7th April');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `groups`
+--
+
+DROP TABLE IF EXISTS `groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `groups` (
+  `group_id` varchar(25) NOT NULL,
+  `group_description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`group_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `groups`
+--
+
+LOCK TABLES `groups` WRITE;
+/*!40000 ALTER TABLE `groups` DISABLE KEYS */;
+INSERT INTO `groups` VALUES ('ty_comps_A','Ty Btech Computer, Division A'),('ty_comp_B','Ty Btech Computer, Division B');
+/*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -91,6 +144,33 @@ INSERT INTO `student_personal_info` VALUES ('1611032','Harsh','Jitendra','5'),('
 UNLOCK TABLES;
 
 --
+-- Table structure for table `user_to_group`
+--
+
+DROP TABLE IF EXISTS `user_to_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_to_group` (
+  `username` varchar(15) DEFAULT NULL,
+  `group_id` varchar(25) DEFAULT NULL,
+  KEY `fk_user_to_group_1_idx` (`group_id`),
+  KEY `fk_user_to_group_2_idx` (`username`),
+  CONSTRAINT `fk_grp_id` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_to_group`
+--
+
+LOCK TABLES `user_to_group` WRITE;
+/*!40000 ALTER TABLE `user_to_group` DISABLE KEYS */;
+INSERT INTO `user_to_group` VALUES ('1611037','ty_comps_A'),('1611032','ty_comps_A');
+/*!40000 ALTER TABLE `user_to_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `username_to_fcmId`
 --
 
@@ -110,6 +190,7 @@ CREATE TABLE `username_to_fcmId` (
 
 LOCK TABLES `username_to_fcmId` WRITE;
 /*!40000 ALTER TABLE `username_to_fcmId` DISABLE KEYS */;
+INSERT INTO `username_to_fcmId` VALUES ('1611032','d3h6OySA4ts:APA91bFKdbWH-OXcks7GB70bXOMaJBdssQq1ghVzBwQWwQhW8FblqZ_0989I9sZhARikarrGBLax7DGWnzY6w9XnMbcf32xYp9mHZhOCZjmEyo5es82UyDVJpCTLnlFwc5TY8QjJKwuV'),('1611034','d3h6OySA4ts:APA91bFKdbWH-OXcks7GB70bXOMaJBdssQq1ghVzBwQWwQhW8FblqZ_0989I9sZhARikarrGBLax7DGWnzY6w9XnMbcf32xYp9mHZhOCZjmEyo5es82UyDVJpCTLnlFwc5TY8QjJKwuV'),('1611037','ctPYf75Km2M:APA91bHdD9oRPuNxUfOiSRDFX10kyQvlGPPlce6OQAnqDy4lpx7ozWVr_9-dwOfnqP4dvtDxVenkFTgpcVPKOKySM5Es0tg5kKJnwvKUtySXyvve7k97BRIHde9bBHnfsx5iJ2VRXgLc');
 /*!40000 ALTER TABLE `username_to_fcmId` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +204,9 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `username` varchar(15) NOT NULL,
   `password` varchar(15) NOT NULL,
-  `role` varchar(15) NOT NULL
+  `role` varchar(15) NOT NULL,
+  `name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,7 +216,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('1611022','1234','admin'),('1611037','1234','parent'),('1611034','1234','teacher'),('1611032','1234','parent');
+INSERT INTO `users` VALUES ('1611022','1234','admin','Admin'),('1611032','1234','parent','Jitendra Patel'),('1611034','1234','teacher','Murtaza Patrawala'),('1611037','1234','parent','Hemant Raul');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -146,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 16:50:08
+-- Dump completed on 2019-03-30 23:13:17
