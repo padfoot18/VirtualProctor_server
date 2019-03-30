@@ -1,5 +1,5 @@
-from flask import Flask, request
-
+from flask import Flask, request, jsonify
+import requests
 app = Flask(__name__)
 
 
@@ -14,7 +14,7 @@ def login():
     password = request.form['password']
     print(username)
     print(password)
-    
+
     if username == "abcd" and password == "1234":
         return "true"
     if username != "abcd" and password != "1234":
@@ -25,5 +25,14 @@ def login():
         return "password_false"
 
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    req = request.get_json(silent=True, force=True)
+    matched_intent = req['queryResult']['intent']['displayName']
+    if matched_intent == 'event_query':
+        print(matched_intent)
+        return jsonify({"fulfillmentText": "no events"})
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug='True')
