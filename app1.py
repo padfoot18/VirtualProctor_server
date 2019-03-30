@@ -21,7 +21,7 @@ mysql = MySQL(app)
 push_service = FCMNotification(api_key=api_keys['fcm'])
 
 
-def is_logged_in(f):
+def login_required(f):
     """
     decorator to check if user is logged in
     """
@@ -56,7 +56,8 @@ def login():
 
             password = data['password']
             role = data['role']
-            if sha256_crypt.verify(password_candidate, password) and role == 'admin':
+            # if sha256_crypt.verify(password_candidate, password) and role == 'admin':
+            if password_candidate == password and role == 'admin':
                 app.logger.info('PASSWORD MATCHED')
                 session['logged_in'] = True
                 session['username'] = username
@@ -77,6 +78,7 @@ def login():
     return render_template('login.html')
 
 
+@login_required
 @app.route('/admin/', methods=['GET', 'POST'])
 def admin_page():
     if request.method == 'POST':
