@@ -223,7 +223,7 @@ def get_all_chats():
     return jsonify(data)
 
 
-@app.route('/user_chat', methods=['POST'])
+@app.route('/insert_chat', methods=['POST'])
 def add_chat():
     from_user = request.form.get('from_user')
     to_user = request.form.get('to_user')
@@ -232,18 +232,19 @@ def add_chat():
 
     sql = 'SELECT * FROM users where username = "{}";'.format(from_user)
     cur = mysql.connection.cursor()
+    cur.execute(sql)
     data = cur.fetchall()[0]
+    print(data)
     if data['password'] == password:
         insert_sql = 'INSERT into chats (from_user, to_user, msg_body) values ("{}", "{}", "{}");'.format(from_user,
                                                                                                           to_user,
                                                                                                           msg_body)
         print(insert_sql)
         cur.execute(insert_sql)
-        cur.commit()
+        mysql.connection.commit()
         cur.close()
         return jsonify({'success': True})
     # TODO(1) close cursor everywhere
-
 
 
 if __name__ == '__main__':
