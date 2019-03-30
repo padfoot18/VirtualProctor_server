@@ -225,12 +225,15 @@ def get_all_chats():
 
 @app.route('/insert_chat', methods=['POST'])
 def add_chat():
-    from_user = request.form.get('from_user')
-    to_user = request.form.get('to_user')
-    msg_body = request.form.get('msg_body')
-    password = request.form.get('password')
+    temp_result = request.get_json()
+    from_user = temp_result['from_user']
+    print(from_user)
+    to_user = temp_result['to_user']
+    msg_body = temp_result['msg_body']
+    password = temp_result['password']
 
     sql = 'SELECT * FROM users where username = "{}";'.format(from_user)
+    print(sql)
     cur = mysql.connection.cursor()
     cur.execute(sql)
     data = cur.fetchall()[0]
@@ -249,4 +252,4 @@ def add_chat():
 
 if __name__ == '__main__':
     app.secret_key = flask_config['secret_key']
-    app.run(debug=True, host='127.0.0.1', port=5000)
+    app.run(debug=True, host='127.0.0.1', port=8989)
