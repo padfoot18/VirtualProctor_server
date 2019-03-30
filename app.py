@@ -95,12 +95,53 @@ def chat():
         row = cur.fetchall()
         description = row[0]['description']
         resp = description
-
+    elif matched_intent == 'direct_event_description':
+        print(response)
+        event_name = response.query_result.parameters.fields['any'].string_value
+        print(event_name)
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT * FROM event WHERE name = %s;", [event_name])
+        row = cur.fetchall()
+        description = row[0]['description']
+        resp = description
+    elif matched_intent == 'subject':
+        cur = mysql.connection.cursor()
+        # TODO dynamic username
+        cur.execute("SELECT * FROM student_personal_info WHERE username='1611032'")
+        row = cur.fetchall()
+        current_sem = row[0]['current_sem']
+        print(current_sem)
+        print(type(current_sem))
+        sem = current_sem
+        sem_detection = response.query_result.parameters.fields['sem_detection'].string_value
+        sem_no = response.query_result.parameters.fields['sem_no'].string_value
+        print(sem_detection, sem_no)
+        if sem_detection != "":
+            if sem_detection == 'previous':
+                sem = int(current_sem) - 1
+            if sem_detection == 'next':
+                sem = int(current_sem) + 1
+        if sem_no != "":
+            sem = sem_no
+        cur = mysql.connection.cursor()
+        print(sem)
+        # TODO dynamic username
+        query = "SELECT subject FROM student_academic_info WHERE sem="+str(sem)+" and username=1611032;"
+        print(query)
+        cur.execute(query)
+        row = cur.fetchall()
+        print(row)
+        subject_names = ''
+        for tuples in row:
+            subject_names += tuples['subject'] + '\n'
+        print(subject_names)
+        resp = subject_names
     elif matched_intent == 'Default Welcome Intent':
         resp = response.query_result.fulfillment_text
     elif matched_intent == 'Default Fallback Intent':
         resp = response.query_result.fulfillment_text
-
+    else:
+        resp = "Sorry, I didn't understand"
     return resp
 
 
