@@ -14,16 +14,16 @@ def login():
     password = request.form['password']
     print(username)
     print(password)
-    
+
     if username == "abcd" and password == "1234":
-        return "true"
+        return "{\"flag\":\"true\", \"role\":\"user\"}";
     if username != "abcd" and password != "1234":
-        return "both_false"
+        return "{\"flag\":\"both_false\", \"role\":\"None\"}";
     elif username != "abcd":
-        return "username_false"
+        return "{\"flag\":\"username_false\", \"role\":\"None\"}";
     elif password != "1234":
-        return "password_false"
+        return "{\"flag\":\"password_false\", \"role\":\"None\"}";
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
