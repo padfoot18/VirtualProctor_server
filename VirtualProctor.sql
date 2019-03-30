@@ -114,7 +114,7 @@ CREATE TABLE `student_academic_info` (
 
 LOCK TABLES `student_academic_info` WRITE;
 /*!40000 ALTER TABLE `student_academic_info` DISABLE KEYS */;
-INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating-Systems','Murtaza Patrawala',87),('1611032',5,'SPCC','Suchita Patil',78),('1611032',5,'MCAN','Prasanna Shete',55),('1611032',5,'Web-Development','Swapnil Patil',65),('1611032',5,'Data-Structure','Manish Potey',97),('1611037',4,'Cloud-Computing','Manish Potey',84),('1611037',4,'Cyber-Security','Prasidini Padwal',74),('1611037',4,'OOPM','Vaibhav Vasani',74),('1611037',4,'Data-Networks','Murtaza Patrawala',72),('1611037',4,'Machine-Learning','Nirmal Shinde',42),('1611032',4,'Cloud-Computing','Manish Potey',74),('1611032',4,'Cyber-Security','Prasidini Padwal',45),('1611032',4,'OOPM','Vaibhav Vasani',94),('1611032',4,'Data-Networks','Murtaza Patrawala',69),('1611032',4,'Machine-Learning','Nirmal Shinde',75);
+INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating-Systems','murtaza patrawala',87),('1611032',5,'SPCC','suchita patil',78),('1611032',5,'MCAN','prasanna shete',55),('1611032',5,'Web-Development','Swapnil Patil',65),('1611032',5,'Data-Structure','manish potey',97),('1611037',4,'Cloud-Computing','manish potey',84),('1611037',4,'Cyber-Security','prasadini padwal',74),('1611037',4,'OOPM','vaibhav vasani',74),('1611037',4,'Data-Networks','murtaza patrawala',72),('1611037',4,'Machine-Learning','nirmal shinde',42),('1611032',4,'Cloud-Computing','manish potey',74),('1611032',4,'Cyber-Security','prasadini padwal',45),('1611032',4,'OOPM','vaibhav vasani',94),('1611032',4,'Data-Networks','murtaza patrawala',69),('1611032',4,'Machine-Learning','nirmal shinde',75);
 /*!40000 ALTER TABLE `student_academic_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +190,7 @@ CREATE TABLE `username_to_fcmId` (
 
 LOCK TABLES `username_to_fcmId` WRITE;
 /*!40000 ALTER TABLE `username_to_fcmId` DISABLE KEYS */;
-INSERT INTO `username_to_fcmId` VALUES ('1611032','d3h6OySA4ts:APA91bFKdbWH-OXcks7GB70bXOMaJBdssQq1ghVzBwQWwQhW8FblqZ_0989I9sZhARikarrGBLax7DGWnzY6w9XnMbcf32xYp9mHZhOCZjmEyo5es82UyDVJpCTLnlFwc5TY8QjJKwuV'),('1611034','d3h6OySA4ts:APA91bFKdbWH-OXcks7GB70bXOMaJBdssQq1ghVzBwQWwQhW8FblqZ_0989I9sZhARikarrGBLax7DGWnzY6w9XnMbcf32xYp9mHZhOCZjmEyo5es82UyDVJpCTLnlFwc5TY8QjJKwuV'),('1611037','ctPYf75Km2M:APA91bHdD9oRPuNxUfOiSRDFX10kyQvlGPPlce6OQAnqDy4lpx7ozWVr_9-dwOfnqP4dvtDxVenkFTgpcVPKOKySM5Es0tg5kKJnwvKUtySXyvve7k97BRIHde9bBHnfsx5iJ2VRXgLc');
+INSERT INTO `username_to_fcmId` VALUES ('1611032','d3h6OySA4ts:APA91bFKdbWH-OXcks7GB70bXOMaJBdssQq1ghVzBwQWwQhW8FblqZ_0989I9sZhARikarrGBLax7DGWnzY6w9XnMbcf32xYp9mHZhOCZjmEyo5es82UyDVJpCTLnlFwc5TY8QjJKwuV'),('1611034','cI62Y_Zm5XU:APA91bEuwIxTORzWyb7h_7B37lgjOqymZ3rcHsYywmvVWB4hnuWVKG02eF2ewwoC5019ItQvyPbZXbKvXqt7aR8ROzWRBba5Q8dR7gC9IXDYwWL4PyOtZK4I3BgykA4WLES2JCLiqvb_'),('1611037','cI62Y_Zm5XU:APA91bEuwIxTORzWyb7h_7B37lgjOqymZ3rcHsYywmvVWB4hnuWVKG02eF2ewwoC5019ItQvyPbZXbKvXqt7aR8ROzWRBba5Q8dR7gC9IXDYwWL4PyOtZK4I3BgykA4WLES2JCLiqvb_');
 /*!40000 ALTER TABLE `username_to_fcmId` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 23:51:29
+-- Dump completed on 2019-03-31  1:51:38
