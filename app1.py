@@ -83,8 +83,6 @@ def login():
 def android_login():
     username = request.form['username']
     password = request.form['password']
-    print(username)
-    print(password)
 
     cur = mysql.connection.cursor()
     query_result = cur.execute("SELECT * FROM users WHERE username=%s", [username])
@@ -93,13 +91,13 @@ def android_login():
         passwd = row['password']
         role = row['role']
         if password == passwd:
-            return "{\"flag\":\"true\", \"role\":"+role+"}";
+            return "{\"flag\":\"true\", \"role\":"+role+"}"
         else:
-            return "{\"flag\":\"password_false\", \"role\":\"None\"}";
+            return "{\"flag\":\"password_false\", \"role\":\"None\"}"
         mysql.connection.commit()
         cur.close()
     else:
-        return "{\"flag\":\"username_false\", \"role\":\"None\"}";
+        return "{\"flag\":\"username_false\", \"role\":\"None\"}"
 
 
 @app.route('/admin/', methods=['GET', 'POST'])
@@ -108,6 +106,7 @@ def admin_page():
     if request.method == 'POST':
         title = request.form['notification-title']
         body = request.form['notification-body']
+        print(title, body)
         result = send_notification('all', title, body)
         return render_template('admin_page.html', alert=result['success'])
 
@@ -173,20 +172,22 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/get_open_chats/')
-def get_chats():
-    username = request.form.get('username')
+@app.route('/get_open_chats', methods=['GET'])
+def get_open_chats():
+    username = request.args.get('username')
     sql1 = 'SELECT distinct from_user from chats where to_user = "{}";'.format(username)
     sql2 = 'SELECT distinct to_user from chats where from_user = "{}";'.format(username)
     cur = mysql.connection.cursor()
     now_of_rows1 = cur.execute(sql1)
+    print(sql1)
+    print(sql2)
     open_chats = set()
     if now_of_rows1 > 0:
         data1 = cur.fetchall()
         print('data1', data1)
         for row in data1:
             if row['from_user'] != username:
-                data1.add(row['form_user'])
+                open_chats.add(row['from_user'])
 
     no_of_rows2 = cur.execute(sql2)
     if no_of_rows2 > 0:
@@ -194,16 +195,55 @@ def get_chats():
         print('data2', data2)
         for row in data2:
             if row['to_user'] != username:
-                data2.add(row['form_user'])
+                open_chats.add(row['to_user'])
 
     open_chats = list(open_chats)
-    sql = 'SELECT username, name from user where username in ("{}");'.format('", '.join(open_chats))
+    print(open_chats)
+    sql = 'SELECT username, name from users where username in ("{}");'.format('", "'.join(open_chats))
+    print(sql)
     now_of_rows = cur.execute(sql)
 
     if now_of_rows > 0:
         data = cur.fetchall()
+        print(data)
 
-    return jsonify(list(open_chats))
+    return jsonify(data)
+
+
+@app.route('/get_all_chats')
+def get_all_chats():
+    user1 = request.args.get('user1')
+    user2 = request.args.get('user2')
+    sql = '''SELECT * FROM chats where (from_user = "{}" and to_user = "{}") or (from_user = "{}" and to_user = "{}")
+    order by msg_time DESC limit 10;'''.format(user1, user2, user2, user1)
+
+    cur = mysql.connection.cursor()
+    cur.execute(sql)
+    data = cur.fetchall()
+    return jsonify(data)
+
+
+@app.route('/user_chat', methods=['POST'])
+def add_chat():
+    from_user = request.form.get('from_user')
+    to_user = request.form.get('to_user')
+    msg_body = request.form.get('msg_body')
+    password = request.form.get('password')
+
+    sql = 'SELECT * FROM users where username = "{}";'.format(from_user)
+    cur = mysql.connection.cursor()
+    data = cur.fetchall()[0]
+    if data['password'] == password:
+        insert_sql = 'INSERT into chats (from_user, to_user, msg_body) values ("{}", "{}", "{}");'.format(from_user,
+                                                                                                          to_user,
+                                                                                                          msg_body)
+        print(insert_sql)
+        cur.execute(insert_sql)
+        cur.commit()
+        cur.close()
+        return jsonify({'success': True})
+    # TODO(1) close cursor everywhere
+
 
 
 if __name__ == '__main__':
