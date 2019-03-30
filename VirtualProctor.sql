@@ -114,7 +114,7 @@ CREATE TABLE `student_academic_info` (
 
 LOCK TABLES `student_academic_info` WRITE;
 /*!40000 ALTER TABLE `student_academic_info` DISABLE KEYS */;
-INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating Systems','Murtaza Patrawala',87),('1611032',5,'SPCC','Suchita Patil',78),('1611032',5,'MCAN','Prasanna Shete',55),('1611032',5,'Web Development','Swapnil Patil',65),('1611032',5,'Data Structure','Manish Potey',97),('1611037',4,'Cloud Computing','Manish Potey',84),('1611037',4,'Cyber Security','Prasidini Padwal',74),('1611037',4,'OOPM','Vaibhav Vasani',74),('1611037',4,'Data Networks','Murtaza Patrawala',72),('1611037',4,'Machine Learning','Nirmal Shinde',42),('1611032',4,'Cloud Computing','Manish Potey',74),('1611032',4,'Cyber Security','Prasidini Padwal',45),('1611032',4,'OOPM','Vaibhav Vasani',94),('1611032',4,'Data Networks','Murtaza Patrawala',69),('1611032',4,'Machine Learning','Nirmal Shinde',75);
+INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating-Systems','Murtaza Patrawala',87),('1611032',5,'SPCC','Suchita Patil',78),('1611032',5,'MCAN','Prasanna Shete',55),('1611032',5,'Web-Development','Swapnil Patil',65),('1611032',5,'Data-Structure','Manish Potey',97),('1611037',4,'Cloud-Computing','Manish Potey',84),('1611037',4,'Cyber-Security','Prasidini Padwal',74),('1611037',4,'OOPM','Vaibhav Vasani',74),('1611037',4,'Data-Networks','Murtaza Patrawala',72),('1611037',4,'Machine-Learning','Nirmal Shinde',42),('1611032',4,'Cloud-Computing','Manish Potey',74),('1611032',4,'Cyber-Security','Prasidini Padwal',45),('1611032',4,'OOPM','Vaibhav Vasani',94),('1611032',4,'Data-Networks','Murtaza Patrawala',69),('1611032',4,'Machine-Learning','Nirmal Shinde',75);
 /*!40000 ALTER TABLE `student_academic_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 23:13:17
+-- Dump completed on 2019-03-30 23:51:29
