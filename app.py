@@ -145,6 +145,19 @@ def chat():
             subject_names += tuples['subject'] + '\n'
         print(subject_names)
         resp = subject_names
+    elif matched_intent == 'direct_teacher':
+        teacher_name = response.query_result.parameters.fields['teacher_name'].string_value.lower()
+        cur = mysql.connection.cursor()
+        cur.execute("SELECT subject from student_academic_info where teacher like %s",['teacher_name'])
+        row = cur.fetchall()
+        print (row)
+        subjects = ''
+        for tuples in row:
+            subjects += tuples['subject']+"/n"
+
+        resp = "Professor "+teacher_name+" teaches\n"+subjects
+    elif matched_intent == 'contact_teacher':
+        pass
     elif matched_intent == 'Default Welcome Intent':
         resp = response.query_result.fulfillment_text
     elif matched_intent == 'Default Fallback Intent':
