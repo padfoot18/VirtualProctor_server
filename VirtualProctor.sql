@@ -35,6 +35,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
+INSERT INTO `event` VALUES ('Abhiyantriki','event','Abhiyantriki is the Technical Fest of our college and will be held for 3 days from 5th April 2019'),('Symphony','event','Symphony is the cultural fest of our college and will be held at 19th of April'),('Prakalpa','event','Prakalpa is State Level Project Competetion on 12th May'),('MLearn','workshop','MLearn is a workshop conducted by Prof. Murtaza Patrawala for Sem 5 Students'),('CyberStud','workshop','CyberStud is a workshop for sem 4 students for Cyber Security conducted by Prof.Manish Potey on 7th April');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,4 +146,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-30 16:20:39
+-- Dump completed on 2019-03-30 16:50:08
