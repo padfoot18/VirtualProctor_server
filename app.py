@@ -232,18 +232,16 @@ def admin_page():
     return render_template('admin_page.html')
 
 
-def send_notification(to, message_title=None, message_body=None):
-    # for testing
-    if not message_body:
-        message_body = "Hope you're having fun this weekend, don't forget to check today's news"
-    if not message_title:
-        message_title = 'Bhai bhai bhai bhai'
-
+def send_notification(to, message_title, message_body, receiver_type='user'):
     cur = mysql.connection.cursor()
     if to == 'all':
         query = 'SELECT * from username_to_fcmId;'
-    else:
+    elif receiver_type == 'user':
         query = 'SELECT * from username_to_fcmId where username="{}";'.format(to)
+    elif receiver_type == 'group':
+        query = 'SELECT * FROM username_to_fcmId natural join user_to_group where group_id = "{}";'.format(to)
+        print(query)
+        # TODO complete this query!!! wrong query!!!
 
     no_of_rows = cur.execute(query)
     if no_of_rows > 0:
@@ -363,9 +361,59 @@ def add_chat():
         print(insert_sql)
         cur.execute(insert_sql)
         mysql.connection.commit()
+        send_notification(to_user, 'New message', msg_body, 'user')
         cur.close()
         return jsonify({'success': True})
     # TODO(1) close cursor everywhere
+
+
+@app.route('/get_groups', methods=['GET'])
+def get_groups():
+    sql = 'SELECT * from groups;'
+    cur = mysql.connection.cursor()
+    cur.execute(sql)
+    data = cur.fetchall()
+    print(data)
+    return jsonify(data)
+
+
+@app.route('/broadcast_to_group', methods=['POST'])
+def broadcast_msg():
+    form_data = request.get_json()
+    from_user = form_data['from_user']
+    password = form_data['password']
+    group_id = form_data['group_id']
+    message = form_data['msg_body']
+
+    sql = 'SELECT * FROM users where username = "{}";'.format(from_user)
+    cur = mysql.connection.cursor()
+    cur.execute(sql)
+    data = cur.fetchall()[0]
+    print(data)
+    if data['password'] == password:
+        insert_sql = 'INSERT INTO broadcast_msg (from_id, group_id, msg_body) values ("{}", "{}", "{}");'.format(
+            from_user, group_id, message)
+        print(insert_sql)
+        cur = mysql.connection.cursor()
+        cur.execute(insert_sql)
+        mysql.connection.commit()
+        # TODO send notification
+        send_notification(group_id, 'New broadcast message', message, 'group')
+        return jsonify({'success': 1})
+
+
+@app.route('/get_broadcast_msg', methods=['GET'])
+def get_broadcast_msg():
+    username = request.args.get('username')
+    sql = '''SELECT group_id, msg_body, msg_time, name FROM broadcast_msg natural join groups join users on from_id = username where group_id in (
+    SELECT group_id from user_to_group where username = "{}") order by msg_time desc limit 10;'''.format(username)
+    print(sql)
+
+    cur = mysql.connection.cursor()
+    cur.execute(sql)
+    data = cur.fetchall()
+    print(data)
+    return jsonify(data)
 
 
 if __name__ == '__main__':
