@@ -146,6 +146,22 @@ def chat():
         resp = "Professor "+teacher_name+" teaches\n"+subjects
 
     elif matched_intent == 'contact_teacher':
+        incoming_name = response.query_result.parameters.fields['subject'].string_value
+        cur = mysql.connection.cursor()
+        query = "SELECT UNIQUE teacher from student_academic_info where teacher like '" + incoming_name + "';"
+        print(query)
+        cur.execute(query)
+        row = cur.fetchall()
+        teacher_name = row[0]['teacher']
+
+        query = "SELECT username from users WHERE teacher_name='" + teacher_name + "';"
+        print(query)
+        cur.execute(query)
+        row = cur.fetchall()
+        teacher_id = row[0]['username']
+        return 'teacher' + teacher_id
+
+    elif matched_intent == 'contact_subject_teacher':
         pass
 
     elif matched_intent == 'subject_to_teacher':
