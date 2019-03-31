@@ -16,6 +16,34 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `broadcast_msg`
+--
+
+DROP TABLE IF EXISTS `broadcast_msg`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `broadcast_msg` (
+  `from_id` varchar(15) DEFAULT NULL,
+  `group_id` varchar(25) DEFAULT NULL,
+  `msg_body` varchar(20000) DEFAULT NULL,
+  `msg_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `fk_user` (`from_id`),
+  KEY `fk_group` (`group_id`),
+  CONSTRAINT `fk_group` FOREIGN KEY (`group_id`) REFERENCES `groups` (`group_id`),
+  CONSTRAINT `fk_user` FOREIGN KEY (`from_id`) REFERENCES `users` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `broadcast_msg`
+--
+
+LOCK TABLES `broadcast_msg` WRITE;
+/*!40000 ALTER TABLE `broadcast_msg` DISABLE KEYS */;
+/*!40000 ALTER TABLE `broadcast_msg` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `chats`
 --
 
@@ -69,6 +97,30 @@ INSERT INTO `event` VALUES ('Abhiyantriki','event','Abhiyantriki is the Technica
 UNLOCK TABLES;
 
 --
+-- Table structure for table `fees`
+--
+
+DROP TABLE IF EXISTS `fees`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `fees` (
+  `year` int(11) DEFAULT NULL,
+  `due_date` varchar(20) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `fees`
+--
+
+LOCK TABLES `fees` WRITE;
+/*!40000 ALTER TABLE `fees` DISABLE KEYS */;
+INSERT INTO `fees` VALUES (1,'03-August-2016',150000),(2,'23-July-2017',170000),(3,'15-July-2018',180000),(4,'18-July-2019',160000);
+/*!40000 ALTER TABLE `fees` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `groups`
 --
 
@@ -93,6 +145,30 @@ INSERT INTO `groups` VALUES ('ty_comps_A','Ty Btech Computer, Division A'),('ty_
 UNLOCK TABLES;
 
 --
+-- Table structure for table `placement`
+--
+
+DROP TABLE IF EXISTS `placement`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `placement` (
+  `company_name` varchar(20) DEFAULT NULL,
+  `no_student_placed` int(11) DEFAULT NULL,
+  `package_offered` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `placement`
+--
+
+LOCK TABLES `placement` WRITE;
+/*!40000 ALTER TABLE `placement` DISABLE KEYS */;
+INSERT INTO `placement` VALUES ('Morgan Stanley',10,1500000),('Accenture',100,350000),('Barclays',50,600000);
+/*!40000 ALTER TABLE `placement` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `student_academic_info`
 --
 
@@ -104,7 +180,9 @@ CREATE TABLE `student_academic_info` (
   `sem` int(11) DEFAULT NULL,
   `subject` varchar(20) DEFAULT NULL,
   `teacher` varchar(20) DEFAULT NULL,
-  `marks` int(11) DEFAULT NULL
+  `marks` int(11) DEFAULT NULL,
+  `teacher_id` varchar(15) DEFAULT NULL,
+  `attendence` varchar(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -114,7 +192,7 @@ CREATE TABLE `student_academic_info` (
 
 LOCK TABLES `student_academic_info` WRITE;
 /*!40000 ALTER TABLE `student_academic_info` DISABLE KEYS */;
-INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating-Systems','murtaza patrawala',87),('1611032',5,'SPCC','suchita patil',78),('1611032',5,'MCAN','prasanna shete',55),('1611032',5,'Web-Development','Swapnil Patil',65),('1611032',5,'Data-Structure','manish potey',97),('1611037',4,'Cloud-Computing','manish potey',84),('1611037',4,'Cyber-Security','prasadini padwal',74),('1611037',4,'OOPM','vaibhav vasani',74),('1611037',4,'Data-Networks','murtaza patrawala',72),('1611037',4,'Machine-Learning','nirmal shinde',42),('1611032',4,'Cloud-Computing','manish potey',74),('1611032',4,'Cyber-Security','prasadini padwal',45),('1611032',4,'OOPM','vaibhav vasani',94),('1611032',4,'Data-Networks','murtaza patrawala',69),('1611032',4,'Machine-Learning','nirmal shinde',75);
+INSERT INTO `student_academic_info` VALUES ('1611032',5,'Operating-Systems','murtaza patrawala',87,'101','50'),('1611032',5,'SPCC','suchita patil',78,'102','67'),('1611032',5,'MCAN','prasanna shete',55,'103','34'),('1611032',5,'Web-Development','swapnil patil',65,'104','84'),('1611032',5,'Data-Structure','manish potey',97,'105','65'),('1611037',4,'Cloud-Computing','manish potey',84,'109','45'),('1611037',4,'Cyber-Security','prasadini padwal',74,'106','59'),('1611037',4,'OOPM','vaibhav vasani',74,'108','83'),('1611037',4,'Data-Networks','murtaza patrawala',72,'101','63'),('1611037',4,'Machine-Learning','nirmal shinde',42,'107','75'),('1611032',4,'Cloud-Computing','manish potey',74,'109','56'),('1611032',4,'Cyber-Security','prasadini padwal',45,'106','86'),('1611032',4,'OOPM','vaibhav vasani',94,'108','76'),('1611032',4,'Data-Networks','murtaza patrawala',69,'101','65'),('1611032',4,'Machine-Learning','nirmal shinde',75,'107','45');
 /*!40000 ALTER TABLE `student_academic_info` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,7 +268,7 @@ CREATE TABLE `username_to_fcmId` (
 
 LOCK TABLES `username_to_fcmId` WRITE;
 /*!40000 ALTER TABLE `username_to_fcmId` DISABLE KEYS */;
-INSERT INTO `username_to_fcmId` VALUES ('1611032','d3h6OySA4ts:APA91bFKdbWH-OXcks7GB70bXOMaJBdssQq1ghVzBwQWwQhW8FblqZ_0989I9sZhARikarrGBLax7DGWnzY6w9XnMbcf32xYp9mHZhOCZjmEyo5es82UyDVJpCTLnlFwc5TY8QjJKwuV'),('1611034','cI62Y_Zm5XU:APA91bEuwIxTORzWyb7h_7B37lgjOqymZ3rcHsYywmvVWB4hnuWVKG02eF2ewwoC5019ItQvyPbZXbKvXqt7aR8ROzWRBba5Q8dR7gC9IXDYwWL4PyOtZK4I3BgykA4WLES2JCLiqvb_'),('1611037','cI62Y_Zm5XU:APA91bEuwIxTORzWyb7h_7B37lgjOqymZ3rcHsYywmvVWB4hnuWVKG02eF2ewwoC5019ItQvyPbZXbKvXqt7aR8ROzWRBba5Q8dR7gC9IXDYwWL4PyOtZK4I3BgykA4WLES2JCLiqvb_');
+INSERT INTO `username_to_fcmId` VALUES ('1611032','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp'),('1611034','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp'),('1611037','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp');
 /*!40000 ALTER TABLE `username_to_fcmId` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,4 +307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-31  1:51:38
+-- Dump completed on 2019-03-31  3:57:34
