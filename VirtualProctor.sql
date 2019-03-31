@@ -40,6 +40,7 @@ CREATE TABLE `broadcast_msg` (
 
 LOCK TABLES `broadcast_msg` WRITE;
 /*!40000 ALTER TABLE `broadcast_msg` DISABLE KEYS */;
+INSERT INTO `broadcast_msg` VALUES ('1611034','ty_comps_A','help me ','2019-03-31 00:30:27'),('1611034','ty_comps_A','hello, tomorrow is your test','2019-03-31 03:08:09');
 /*!40000 ALTER TABLE `broadcast_msg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,8 +69,34 @@ CREATE TABLE `chats` (
 
 LOCK TABLES `chats` WRITE;
 /*!40000 ALTER TABLE `chats` DISABLE KEYS */;
-INSERT INTO `chats` VALUES ('1611034','1611037','hello','2019-03-30 12:28:42'),('1611034','1611032','hiii','2019-03-30 12:33:40'),('1611037','1611034','Hello. How are you doing?','2019-03-30 13:26:07'),('1611034','1611037','I am fine','2019-03-30 13:26:39'),('1611037','1611034','hey','2019-03-30 14:31:26'),('1611034','1611037','yo','2019-03-30 14:32:33');
+INSERT INTO `chats` VALUES ('1611034','1611037','hello','2019-03-30 12:28:42'),('1611034','1611032','hiii','2019-03-30 12:33:40'),('1611037','1611034','Hello. How are you doing?','2019-03-30 13:26:07'),('1611034','1611037','I am fine','2019-03-30 13:26:39'),('1611037','1611034','hey','2019-03-30 14:31:26'),('1611034','1611037','yo','2019-03-30 14:32:33'),('1611034','1611037','Hey','2019-03-31 00:30:04'),('1611032','1611034','Hello','2019-03-31 00:30:57'),('1611034','1611032','Help','2019-03-31 00:32:04'),('1611034','1611032','New hello','2019-03-31 02:26:40'),('1611034','1611032','Something new','2019-03-31 02:29:07'),('1611032','1611034','Ok fine','2019-03-31 02:29:26'),('1611034','1611022','You are requested to meet principal','2019-03-31 03:09:02'),('1611034','1611037','You are requested to meet principal','2019-03-31 03:09:52');
 /*!40000 ALTER TABLE `chats` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `digital_signature`
+--
+
+DROP TABLE IF EXISTS `digital_signature`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `digital_signature` (
+  `username` varchar(15) DEFAULT NULL,
+  `is_signed` int(11) DEFAULT '0',
+  `semester` varchar(45) DEFAULT NULL,
+  KEY `fk_user_idx` (`username`),
+  CONSTRAINT `fk_user_signed` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `digital_signature`
+--
+
+LOCK TABLES `digital_signature` WRITE;
+/*!40000 ALTER TABLE `digital_signature` DISABLE KEYS */;
+INSERT INTO `digital_signature` VALUES ('1611037',0,'4'),('1611032',0,'5');
+/*!40000 ALTER TABLE `digital_signature` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -268,7 +295,7 @@ CREATE TABLE `username_to_fcmId` (
 
 LOCK TABLES `username_to_fcmId` WRITE;
 /*!40000 ALTER TABLE `username_to_fcmId` DISABLE KEYS */;
-INSERT INTO `username_to_fcmId` VALUES ('1611032','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp'),('1611034','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp'),('1611037','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp');
+INSERT INTO `username_to_fcmId` VALUES ('1611032','cHy4Kdg0dnU:APA91bFnyN_22_WenxMfkxocm3ikiyRJxyrlGYT68DcWbjuVVnhlyi0dMx7H5E6gOyt178tir37QAUKtKymCzmszWw6Qac_zCvqHh0Twh4vDF50Lowl6WqJxBCDBcE6nx03LMeUsaHY8'),('1611034','fXP5rXkPEc0:APA91bEmZLyUH72xOeB4Kmz-PRuLTpJve6uUg5qoHdmmIEU1ZDq6k8M_YP6om0BcepCAnl37lSVZJcwZRsStyaZAox-1y5pQZBNTus2hcT9eQhGBI_Q56hi6g3ghLdEyY60aI6FcY1rH'),('1611037','e_vAClmBRBE:APA91bGdwgci5kPE9qwi_zn2CwA9yM_BNHdYZuE7hpr3VUdj8omuZfL9PSD7WgZbl7wdAdcnUyJPXK7jQWDVTsEeHeUjMNq3s1Q-_qNVlBCMW4nYGTRVGxvaH4mKNomENZK4Sm5shzpp');
 /*!40000 ALTER TABLE `username_to_fcmId` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,4 +334,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-03-31  3:57:34
+-- Dump completed on 2019-03-31  8:57:25

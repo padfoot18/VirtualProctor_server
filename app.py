@@ -79,7 +79,7 @@ def chat():
 
     matched_intent = response.query_result.intent.display_name
     print(matched_intent)
-
+    print(session_id, type(session_id))
     if matched_intent == 'events':
         cur = mysql.connection.cursor()
         cur.execute("select name from event;")
@@ -100,7 +100,6 @@ def chat():
         resp = description
 
     elif matched_intent == 'direct_event_description':
-        print(response)
         event_name = response.query_result.parameters.fields['any'].string_value
         print(event_name)
         cur = mysql.connection.cursor()
@@ -193,7 +192,7 @@ def chat():
             query = "SELECT subject from student_academic_info where username='" + username + "' and sem=" + current_sem + " and attendence="+str(max_attendance)+";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = "Your ward has highest attandance of " + str(max_attendance) + "% in" + row[0]['subject'] + "😌"
+            resp = "Your ward has highest attandance of " + str(max_attendance) + "% in " + row[0]['subject'] + " 😌"
         if params == "lowest":
             query = "SELECT attendence from student_academic_info where username='" + username + "' and sem=" + current_sem + ";"
             print(query)
@@ -207,7 +206,7 @@ def chat():
                 min_attendance) + ";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = "Your child has lowest attendance of " + str(min_attendance) + " in" + row[0]['subject'] + "☹️"
+            resp = "Your child has lowest attendance of " + str(min_attendance) + " in " + row[0]['subject'] + " ☹️"
         if params == 'below_border':
             query = "SELECT subject, attendence from student_academic_info where username='" + username + "' and sem=" + current_sem + " and attendence < 75;"
             print(query)
@@ -219,6 +218,19 @@ def chat():
             resp = subjects
 
     elif matched_intent == 'result':
+        sign_sql = 'select is_signed from digital_signature where username = "{}";'.format(username)
+        print('signed_sql', sign_sql)
+        cur = mysql.connection.cursor()
+        num_rows = cur.execute(sign_sql)
+        if num_rows > 0:
+            data = cur.fetchall()[0]
+            print(data)
+            if data['is_signed'] == 1:
+                is_signed = True
+            elif data['is_signed'] == 0:
+                is_signed = False
+
+
         params = response.query_result.parameters.fields['extremes'].string_value
         print(params)
         cur = mysql.connection.cursor()
@@ -239,7 +251,11 @@ def chat():
                 marks += tuples['subject'] + '\t\t⇒\t\t' + str(tuples['marks']) + '/100\n'
                 average_marks += tuples['marks']
             marks += '\n' + 'Total Marks' + '\t\t⇒\t\t' + str(average_marks)
-            resp = marks + '\n' + 'Average Marks' + '\t\t⇒\t\t' + str(average_marks/count)
+            if not is_signed:
+                temp = '\n\n\nEnter your password to digitally sign the report card'
+            else:
+                temp = ''
+            resp = marks + '\n' + 'Average Marks' + '\t\t⇒\t\t' + str(average_marks/count)+temp
         if params == "lowest":
             query = "SELECT marks from student_academic_info where username='" + username + "' and sem=" + current_sem + ";"
             print(query)
@@ -267,7 +283,7 @@ def chat():
                 max_marks) + ";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = "Your child has got a lowest score of " + str(max_marks) + "in " + row[0]['subject']
+            resp = "Your child has got a highest score of " + str(max_marks) + "in " + row[0]['subject']
 
         if params == 'below_border':
             query = "SELECT subject, marks from student_academic_info where marks<40 and username='" + username + "' and sem=" + current_sem + ";"
@@ -282,6 +298,24 @@ def chat():
                 resp = marks
             else:
                 resp = "Not failed in any subject"
+    elif matched_intent == 'password':
+        password = int(response.query_result.parameters.fields['password'].number_value)
+        print(password)
+        # TODO password checking code
+
+        sql = 'SELECT * FROM users where username = "{}";'.format(username)
+        cur = mysql.connection.cursor()
+        cur.execute(sql)
+        data = cur.fetchall()[0]
+        print(data)
+        if data['password'] == str(password):
+            update_sql = 'update digital_signature set is_signed = 1 where username = "{}";'.format(username)
+            print(update_sql)
+            cur.execute(update_sql)
+            mysql.connection.commit()
+            resp = 'Successfully signed the report card!'
+        else:
+            resp = 'Invalid password'
 
     elif matched_intent == 'placement':
         params = response.query_result.parameters.fields['extremes'].string_value
@@ -525,8 +559,7 @@ def get_open_chats():
 def get_all_chats():
     user1 = request.args.get('user1')
     user2 = request.args.get('user2')
-    sql = '''SELECT * FROM chats where (from_user = "{}" and to_user = "{}") or (from_user = "{}" and to_user = "{}")
-    order by msg_time DESC limit 10;'''.format(user1, user2, user2, user1)
+    sql = '''SELECT * FROM chats where (from_user = "{}" and to_user = "{}") or (from_user = "{}" and to_user = "{}");'''.format(user1, user2, user2, user1)
 
     cur = mysql.connection.cursor()
     cur.execute(sql)
