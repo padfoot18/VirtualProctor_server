@@ -162,7 +162,7 @@ def chat():
             print(row[0]['teacher'])
             resp = row[0]['teacher']
         else:
-            resp = "Did you enter the correct subject"
+            resp = "Are you sure you entered the correct subject☹️"
 
     elif matched_intent == 'attendance':
         params = response.query_result.parameters.fields['extremes'].string_value
@@ -193,7 +193,7 @@ def chat():
             query = "SELECT subject from student_academic_info where username='" + username + "' and sem=" + current_sem + " and attendence="+str(max_attendance)+";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = row[0]['subject'] + '  ' + str(max_attendance)
+            resp = "Your ward has highest attandance of " + str(max_attendance) + "% in" + row[0]['subject'] + "😌"
         if params == "lowest":
             query = "SELECT attendence from student_academic_info where username='" + username + "' and sem=" + current_sem + ";"
             print(query)
@@ -207,13 +207,13 @@ def chat():
                 min_attendance) + ";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = row[0]['subject'] + '  ' + str(min_attendance)
+            resp = "Your child has lowest attendance of " + str(min_attendance) + " in" + row[0]['subject'] + "☹️"
         if params == 'below_border':
             query = "SELECT subject, attendence from student_academic_info where username='" + username + "' and sem=" + current_sem + " and attendence < 75;"
             print(query)
             cur.execute(query)
             row = cur.fetchall()
-            subjects = ''
+            subjects = 'Your child has below par attendance in the following subjects\n'
             for tuples in row:
                 subjects += tuples['subject'] + '\t\t⇒\t\t' + tuples['attendence'] + '%\n'
             resp = subjects
@@ -252,7 +252,7 @@ def chat():
             query = "SELECT subject from student_academic_info where username='" + username + "' and sem=" + current_sem + " and marks="+str(min_marks)+";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = row[0]['subject'] + "  " + str(min_marks)
+            resp = "Your child has got a lowest score of " + str(min_marks) + "in " + row[0]['subject'] + "😢"
 
         if params == 'highest':
             query = "SELECT marks from student_academic_info where username='" + username + "' and sem=" + current_sem + ";"
@@ -267,7 +267,7 @@ def chat():
                 max_marks) + ";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = row[0]['subject'] + "  " + str(max_marks)
+            resp = "Your child has got a lowest score of " + str(max_marks) + "in " + row[0]['subject']
 
         if params == 'below_border':
             query = "SELECT subject, marks from student_academic_info where marks<40 and username='" + username + "' and sem=" + current_sem + ";"
@@ -275,7 +275,7 @@ def chat():
             cur.execute(query)
             row = list(cur.fetchall())
             print(row)
-            marks = ''
+            marks = 'Your child has failed in the following subject/n'
             for tuples in row:
                 marks += tuples['subject'] + '\t\t⇒\t\t' + str(tuples['marks']) + '/100\n'
             if marks != '':
@@ -306,7 +306,7 @@ def chat():
             query = "SELECT company_name, no_student_placed FROM placement WHERE package_offered="+str(max_package)+";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = row[0]['company_name'] + '  ' + str(row[0]['no_student_placed']) + '  ' + str(max_package)
+            resp = 'Highest package of ' + str(max_package) + ' was offered by ' + row[0]['company_name'] + ' to ' + str(row[0]['no_student_placed']) + '  students'
         elif params == 'lowest':
             cur = mysql.connection.cursor()
             cur.execute("SELECT package_offered  FROM placement")
@@ -320,7 +320,7 @@ def chat():
                 min_package) + ";"
             cur.execute(query)
             row = cur.fetchall()
-            resp = row[0]['company_name'] + '  ' + str(row[0]['no_student_placed']) + '  ' + str(min_package)
+            resp = 'Lowest package of ' + str(min_package) + ' was offered by ' + row[0]['company_name'] + ' to ' + str(row[0]['no_student_placed']) + '  students'
 
     elif matched_intent == 'fees':
         pass
