@@ -136,7 +136,7 @@ def chat():
     elif matched_intent == 'direct_teacher':
         teacher_name = response.query_result.parameters.fields['teacher_name'].string_value.lower()
         cur = mysql.connection.cursor()
-        cur.execute("SELECT DISTINCT teacher_id, subject from student_academic_info where teacher like %s", [teacher_name])
+        cur.execute('SELECT DISTINCT teacher_id, subject from student_academic_info where teacher like "{}%"'.format(teacher_name))
         row = cur.fetchall()
         print(row)
         subjects = ''
@@ -146,23 +146,39 @@ def chat():
         resp = "Professor "+teacher_name+" teaches\n"+subjects
 
     elif matched_intent == 'contact_teacher':
-        incoming_name = response.query_result.parameters.fields['subject'].string_value
+        incoming_name = response.query_result.parameters.fields['teacher_name'].string_value
         cur = mysql.connection.cursor()
-        query = "SELECT UNIQUE teacher from student_academic_info where teacher like '" + incoming_name + "';"
+        query = "SELECT DISTINCT teacher from student_academic_info where teacher like '" + incoming_name + "%';"
         print(query)
         cur.execute(query)
         row = cur.fetchall()
         teacher_name = row[0]['teacher']
 
-        query = "SELECT username from users WHERE teacher_name='" + teacher_name + "';"
+        query = "SELECT username from users WHERE name='" + teacher_name + "';"
         print(query)
         cur.execute(query)
         row = cur.fetchall()
         teacher_id = row[0]['username']
-        return 'teacher' + teacher_id
+        return 'teacher' + teacher_id + teacher_name
 
     elif matched_intent == 'contact_subject_teacher':
-        pass
+        print(response)
+        incoming_name = response.query_result.parameters.fields['subject_name'].string_value
+        print(response.query_result.parameters.fields)
+        cur = mysql.connection.cursor()
+        query = "SELECT DISTINCT teacher from student_academic_info where subject = '" + incoming_name + "';"
+        print(query)
+        cur.execute(query)
+        row = cur.fetchall()
+        teacher_name = row[0]['teacher']
+
+        query = "SELECT username from users WHERE name='" + teacher_name + "';"
+        print(query)
+        cur.execute(query)
+        row = cur.fetchall()
+        teacher_id = row[0]['username']
+        return 'teacher' + teacher_id + teacher_name
+
 
     elif matched_intent == 'subject_to_teacher':
         subject = response.query_result.parameters.fields['subject'].string_value
