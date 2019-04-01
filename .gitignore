@@ -126,7 +126,7 @@ dmypy.json
 .idea/
 
 # config files
-config.py
+personal_config.py
 
 # google key json
 virtualproctor-a0dcc-07836092f0a4.json
