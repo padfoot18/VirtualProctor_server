@@ -15,7 +15,7 @@ def login_required(f):
             return f(*args, **kwargs)
         else:
             flash('Unauthorized, Please login', 'danger')
-            return redirect(url_for('login'))
+            return redirect(url_for('admin.login'))
     return wrap
 
 
@@ -25,7 +25,6 @@ def admin_page():
     if request.method == 'POST':
         title = request.form['notification-title']
         body = request.form['notification-body']
-        print(title, body)
         result = send_notification('all', title, body)
         return render_template('admin_page.html', alert=result['success'])
 
@@ -53,7 +52,7 @@ def login():
                 session['username'] = username
 
                 flash('You are now logged in', 'success')
-                return redirect('/admin/')
+                return redirect(url_for('admin.admin_page'))
 
             else:
                 error = 'Incorrect Password'
@@ -62,5 +61,17 @@ def login():
         else:
             error = 'Username not found'
             return render_template('login.html', error=error)
+    else:
+        if 'logged_in' in session:
+            return redirect(url_for('admin.admin_page'))
 
     return render_template('login.html')
+
+
+@admin_bp.route('/logout/')
+@login_required
+def logout():
+    """ Log out from the site """
+    session.clear()
+    flash('You are now logged out ', 'success')
+    return redirect(url_for('admin.login'))

@@ -12,7 +12,6 @@ def send_notification(to, message_title, message_body, receiver_type='user'):
         query = 'SELECT * from username_to_fcmId where username="{}";'.format(to)
     elif receiver_type == 'group':
         query = 'SELECT * FROM username_to_fcmId natural join user_to_group where group_id = "{}";'.format(to)
-        print(query)
 
     no_of_rows = cur.execute(query)
     if no_of_rows > 0:

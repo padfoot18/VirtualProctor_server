@@ -8,7 +8,7 @@
         <ul class="navbar-nav mr-auto">
         {% if session.logged_in %}
           <li class="nav-item active" style="float:right;">
-            <a class="nav-link" href="/logout/">Logout <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{{ url_for('admin.logout') }}">Logout <span class="sr-only">(current)</span></a>
           </li>
         {% endif %}
         </ul>

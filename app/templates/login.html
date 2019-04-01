@@ -5,10 +5,10 @@
 
 	<h2 style="text-align: center;">Admin Login</h2>
     {% if error %}
-        <p style="color: #red;">{{ error }}</p>
+        <p style="color: red;">{{ error }}</p>
     {% endif %}
     <div class="form-group">
-	<form action="/login/" method="POST">
+	<form action="{{ url_for('admin.login') }}" method="POST">
 		<div class="form-group">
 			<label>Username</label>
 			<input type="text" name="username" class="form-control" autofocus value={{request.form.email}}>
