@@ -6,6 +6,7 @@ import dialogflow_v2 as dialogflow
 from app.chatbot import chatbot_bp
 
 
+# TODO: reset password for app
 # TODO: return json response everywhere
 @chatbot_bp.route('/login', methods=['POST'])
 def android_login():

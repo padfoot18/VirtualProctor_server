@@ -7,7 +7,7 @@ from personal_config import api_keys
 db = None
 push_service = None
 
-# TODO IMPORTANT: USE url_for(function_name) for dynamic urls!!!
+# DONE IMPORTANT: USE url_for(function_name) for dynamic urls!!!
 # TODO: Encrypt passwords lol
 
 
