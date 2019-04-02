@@ -48,12 +48,13 @@ def get_open_chats():
 def get_all_chats():
     user1 = request.args.get('user1')
     user2 = request.args.get('user2')
-    sql = '''SELECT * FROM chats where (from_user = "{}" and to_user = "{}") or (from_user = "{}" and to_user = "{}");'''.format(user1, user2, user2, user1)
-    # TODO: handle reverse messages in android
+    sql = '''SELECT * FROM chats where (from_user = "{}" and to_user = "{}") or (from_user = "{}" and to_user = "{}") 
+    order by msg_time desc;'''.format(user1, user2, user2, user1)
+    # : handle reverse messages in android
     cur = db.connection.cursor()
     cur.execute(sql)
     data = cur.fetchall()
-    return jsonify(data)
+    return jsonify(data[::-1])
 
 
 @chat_bp.route('/insert_chat', methods=['POST'])
