@@ -34,6 +34,7 @@ def send_notification(to, message_title, message_body, receiver_type='user'):
         return {'success': 0}
 
 
+# TODO: change get request to post request
 @notif_bp.route('/register', methods=['GET'])
 def register():
     username = request.args.get('username')

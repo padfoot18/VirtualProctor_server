@@ -4,7 +4,7 @@ from app.chat import chat_bp
 from app.push_notification.notifications import send_notification
 
 
-@chat_bp.route('/get_open_chats')
+@chat_bp.route('/chat_list')
 def get_open_chats():
     username = request.args.get('username')
     sql1 = 'SELECT distinct from_user from chats where to_user = "{}";'.format(username)
@@ -119,3 +119,12 @@ def get_broadcast_msg():
     print(data)
     return jsonify(data)
 
+
+@chat_bp.route('/get_groups', methods=['GET'])
+def get_groups():
+    sql = 'SELECT * from groups;'
+    cur = db.connection.cursor()
+    cur.execute(sql)
+    data = cur.fetchall()
+    print(data)
+    return jsonify(data)

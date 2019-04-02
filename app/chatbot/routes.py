@@ -6,7 +6,8 @@ import dialogflow_v2 as dialogflow
 from app.chatbot import chatbot_bp
 
 
-@chatbot_bp.route('/android_login', methods=['POST'])
+# TODO: return json response everywhere
+@chatbot_bp.route('/login', methods=['POST'])
 def android_login():
     username = request.form['username']
     password = request.form['password']
@@ -29,7 +30,7 @@ def android_login():
         return "{\"flag\":\"username_false\", \"role\":\"None\"}"
 
 
-@chatbot_bp.route('/android_chat', methods=['POST'])
+@chatbot_bp.route('/chat', methods=['POST'])
 def chat():
     user_query = request.form['query']
     username = request.form['username']
@@ -118,7 +119,6 @@ def chat():
         print(row)
         subjects = ''
         for tuples in row:
-            # TODO change display statement
             subjects += tuples['teacher_id']+"\t\t⇒\t\t" + tuples['subject'] + "\n"
         resp = "Professor "+teacher_name+" teaches\n"+subjects
 
@@ -238,7 +238,6 @@ def chat():
             elif data['is_signed'] == 0:
                 is_signed = False
 
-
         params = response.query_result.parameters.fields['extremes'].string_value
         print(params)
         cur = db.connection.cursor()
@@ -309,7 +308,6 @@ def chat():
     elif matched_intent == 'password':
         password = int(response.query_result.parameters.fields['password'].number_value)
         print(password)
-        # TODO password checking code
 
         sql = 'SELECT * FROM users where username = "{}";'.format(username)
         cur = db.connection.cursor()
